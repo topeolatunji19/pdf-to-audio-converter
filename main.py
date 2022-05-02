@@ -1,5 +1,4 @@
 import PyPDF2
-import pyttsx3
 from tkinter import *
 from tkinter import filedialog, messagebox
 from boto3 import Session
