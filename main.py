@@ -36,8 +36,6 @@ def convert_audio():
         title = information.title
     except AttributeError:
         title = "new_audio"
-    else:
-        title = information.title
 
     session = Session(aws_access_key_id=os.environ.get("aws_access_key_id"),
                       aws_secret_access_key=os.environ.get("aws_secret_access_key"),
