@@ -1,4 +1,5 @@
 import PyPDF2
+import pyttsx3
 from tkinter import *
 from tkinter import filedialog, messagebox
 from boto3 import Session
@@ -18,6 +19,8 @@ def open_file():
     filename = filedialog.askopenfilename(initialdir='/', title="Select a file", filetypes=[('Text Files',
                                                                                              '*pdf')])
     file_path = filename
+    file_path_entry.delete(0, END)
+    file_path_entry.insert(0, file_path)
 
 
 def convert_audio():
@@ -36,6 +39,8 @@ def convert_audio():
         title = information.title
     except AttributeError:
         title = "new_audio"
+    else:
+        title = information.title
 
     session = Session(aws_access_key_id=os.environ.get("aws_access_key_id"),
                       aws_secret_access_key=os.environ.get("aws_secret_access_key"),
@@ -91,7 +96,7 @@ def convert_audio():
 
 
 window = Tk()
-window.title("Image Watermarking Application")
+window.title("Pdf to Audio Converter")
 window.minsize(width=500, height=300)
 window.config(padx=50, pady=50)
 
@@ -105,13 +110,20 @@ button_explore = Button(window,
                         command=open_file)
 button_explore.grid(column=1, row=2)
 
+file_path_label = Label(window, text="File Path")
+file_path_label.grid(row=3, column=0)
+
+file_path_entry = Entry(width=60)
+file_path_entry.grid(row=3, column=1, columnspan=2)
+
 button_exit = Button(window,
                      text="Exit",
                      command=exit)
-button_exit.grid(column=1, row=3)
+button_exit.grid(column=1, row=4)
+
 
 convert_audio_button = Button(window, text="CONVERT PDF TO AUDIO", command=convert_audio, width=30)
-convert_audio_button.grid(column=1, row=3)
+convert_audio_button.grid(column=1, row=4)
 
 
 window.mainloop()
